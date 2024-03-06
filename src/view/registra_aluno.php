@@ -1,5 +1,5 @@
 <?php
-// registra_chamado.php
+
 session_start();
 require_once "../../validador_acesso.php";
 require_once "../view/Classes.php";
@@ -33,7 +33,7 @@ if ($matriculaExistente) {
     fwrite($arquivo, $aluno->getNome() . '#' . $aluno->getMatricula() . '#' . $aluno->getCurso() . PHP_EOL);
     fclose($arquivo);
 
-    // Redireciona para home.php após o processamento do formulário
+    // Redireciona para home.php
     header('Location: home.php');
     exit;
 }

@@ -7,7 +7,7 @@ require_once "../view/Classes.php";
   // Lê os alunos do arquivo
   $cadastroAlunos->lerAlunosDoArquivo('../../arquivo.txt');
 
-  // Agora, $cadastroAlunos->listarAlunos() retornará os alunos lidos do arquivo
+  // $cadastroAlunos->listarAlunos() retornará os alunos do arquivo
   $alunos = $cadastroAlunos->listarAlunos();
 
 ?>

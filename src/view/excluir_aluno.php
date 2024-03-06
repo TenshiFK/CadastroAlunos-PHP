@@ -10,7 +10,6 @@
     foreach ($arquivo as $linha) {
         $dados = explode('#', $linha);
         if ($dados[1] == $matricula) {
-            // Não adicione a linha ao array $linhas se corresponder ao ID a ser excluído
             continue;
         }
         $linhas[] = $linha;

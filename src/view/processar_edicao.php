@@ -19,7 +19,7 @@
         // Reescrever o arquivo com os dados atualizados
         file_put_contents('../../arquivo.txt', $linhasAtualizadas);
 
-        // Redirecionar ou mostrar uma mensagem de sucesso
+        // Redirecionar
         header('Location: consultar_aluno.php');
     }
 ?>
