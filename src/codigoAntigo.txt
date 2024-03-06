@@ -1,0 +1,456 @@
+Possuo esse meu arquivo Classes.php e gostaria de saber que alterações preciso fazer nos outros códigos para utiliza-lo                                                                                                             código Classes.php:          <?php
+    class Aluno {
+        private $nome;
+        private $matricula;
+        private $curso;
+
+        public function __construct($nome, $matricula, $curso) {
+            $this->nome = $nome;
+            $this->matricula = $matricula;
+            $this->curso = $curso;
+        }
+
+        public function getNome() {
+            return $this->nome;
+        }
+
+        public function getMatricula() {
+            return $this->matricula;
+        }
+
+        public function getCurso() {
+            return $this->curso;
+        }
+    }
+
+    class CadastroAlunos {
+        private $alunos = [];
+
+        public function cadastrarAluno(Aluno $aluno) {
+            $this->alunos[] = $aluno;
+        }
+
+        public function listarAlunos() {
+            foreach ($this->alunos as $aluno) {
+                echo "Nome: " . $aluno->getNome() . ", Matrícula: " . $aluno->getMatricula() . ", Curso: " . $aluno->getCurso() . "<br>";
+            }
+        }
+    }
+?>                                                                                                                                                              código adicionar_aluno.php:    <?php
+// abrir_chamado.php
+require_once "../../validador_acesso.php";
+?>
+
+<!-- O conteúdo do arquivo abrir_chamado.php permanece o mesmo, mas você pode querer otimizar o código CSS e HTML. -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Cadastro Alunos - Adicionar</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+      .card-abrir-chamado {
+        padding: 60px 0 0 0;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .btn-hover:hover {
+        background-color: #070F4B !important;
+      }
+    </style>
+  </head>
+
+  <body>
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" style='background-color:#070F2B;'>
+    <div class="container-fluid">
+    <a href="#" class="navbar-brand" style='display:flex; justify-content:center; align-items:center; gap:8px; font-size:25px; color:beige;'>
+        <img src="../../LogoCadastro.png" width="50" height="50" class="d-inline-block align-top" alt="Logo.png">
+        Cadastro Alunos
+    </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+  </nav>
+
+    <div class="container">    
+      <div class="row">
+
+        <div class="card-abrir-chamado">
+          <div class="card">
+            <div class="card-header">
+              Cadastro de Aluno
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  
+                  <form method="post" action="registra_aluno.php">
+                    <div class="form-group">
+                      <label>Nome</label>
+                      <input name="nome" type="text" class="form-control" placeholder="Nome">
+                    </div>
+
+                    <div class="form-group">
+                      <label>Matrícula</label>
+                      <input name="matricula" type="text" class="form-control" placeholder="Matrícula">
+                    </div>
+                    
+                    <div class="form-group">
+                      <label>Curso</label>
+                      <select name="curso" class="form-control">
+                        <option>Administração</option>
+                        <option>Arq e Urbanismo</option>
+                        <option>Biomedicina</option>
+                        <option>Ciências Contábeis</option>
+                        <option>Direito</option>
+                        <option>Enfermagem</option>
+                        <option>Eng. Agronômica</option>
+                        <option>Eng. Civil</option>
+                        <option>Eng. de Software</option>
+                        <option>Eng. Elétrica</option>
+                        <option>Eng. Mecânica</option>
+                        <option>Farmácia</option>
+                        <option>Fisioterapia</option>
+                        <option>Medicina</option>
+                        <option>Med. Veterinária</option>
+                        <option>Nutrição</option>
+                        <option>Odontologia</option>
+                        <option>Psicologia</option>
+                        <option>Publicidade e Propaganda</option>
+                      </select>
+                    </div>
+
+                    <div class="row mt-5">
+                      <div class="col-6">
+                        <a class="btn btn-lg btn-info btn-block" href="home.php">Voltar</a>
+                      </div>
+
+                      <div class="col-6">
+                        <button class="btn btn-lg btn-block btn-hover" type="submit" style='background-color:#070F2B; color:beige;'>Adicionar Aluno</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </body>
+</html>                                                                                                                                                    código registra_aluno.php:            <?php
+// registra_chamado.php
+session_start();
+require_once "../../validador_acesso.php";
+
+// O restante do código permanece o mesmo, mas você pode querer otimizar o código CSS e HTML.
+
+	//estamos trabalhando na montagem do texto
+	$nome = str_replace('#', '-', $_POST['nome']);
+	$matricula = str_replace('#', '-', $_POST['matricula']);
+	$curso = str_replace('#', '-', $_POST['curso']);
+
+	//implode('#', $_POST);
+
+	$texto = $_SESSION['id'] . '#' . $nome . '#' . $matricula . '#' . $curso . PHP_EOL;
+
+
+	//abrindo o arquivo
+	$arquivo = fopen('../../arquivo.txt', 'a');
+	//escrevendo o texto
+	fwrite($arquivo, $texto);
+	//fechando o arquivo
+	fclose($arquivo);
+
+	// Redireciona para home.php após o processamento do formulário
+	header('Location: home.php');
+	exit;
+?>                                                                                                                                                                código consultar_aluno.php:     <?php
+require_once "../../validador_acesso.php";
+
+//chamados
+$alunos = array();
+
+//abrir o arquivo.hd
+$arquivo = fopen('../../arquivo.txt', 'r');
+
+//enquanto houver registros (linhas) a serem recuperados
+while(!feof($arquivo)) { //testa pelo fim de um arquivo
+  //linhas  
+  $registro = fgets($arquivo);
+  $alunos[] = $registro;
+}
+
+//fechar o arquivo aberto
+fclose($arquivo);
+
+// O restante do código permanece o mesmo, mas você pode querer otimizar o código CSS e HTML.
+?>
+
+<!-- O conteúdo do arquivo consultar_chamado.php permanece o mesmo, mas você pode querer otimizar o código CSS e HTML. -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Cadastro Alunos - Consultar</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+      .card-consultar-chamado {
+        padding: 60px 0 0 0;
+        width: 100%;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" style='background-color:#070F2B;'>
+    <div class="container-fluid">
+    <a href="#" class="navbar-brand" style='display:flex; justify-content:center; align-items:center; gap:8px; font-size:25px; color:beige;'>
+        <img src="../../LogoCadastro.png" width="50" height="50" class="d-inline-block align-top" alt="Logo.png">
+        Cadastro Alunos
+    </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+  </nav>
+
+    <div class="container">    
+      <div class="row">
+
+        <div class="card-consultar-chamado">
+          <div class="card">
+            <div class="card-header">
+              Consulta de chamado
+            </div>
+            
+            <div class="card-body">
+
+              <?php foreach($alunos as $aluno) { ?>
+              
+                <?php
+
+                  $aluno_dados = explode('#', $aluno);
+
+                  //
+                  if($_SESSION['perfil_id'] == 2) {
+                    //só vamos exibir o aluno, se ele foi criado pelo usuário
+                    if($_SESSION['id'] != $aluno_dados[0]) {
+                      continue;
+                    }
+                  }
+
+                  if(count($aluno_dados) < 3) {
+                    continue;
+                  }
+
+                ?>
+                <div class="card mb-3 bg-light">
+                  <div class="card-body">
+                    <h5 class="card-title"><?=$aluno_dados[1]?></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><?=$aluno_dados[2]?></h6>
+                    <p class="card-text"><?=$aluno_dados[3]?></p>
+                    
+                    <form action="excluir_aluno.php" method="post">
+                      <input type="hidden" name="id" value="<?=$aluno_dados[0]?>">
+                      <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+
+                    <form action="editar_aluno.php" method="get">
+                      <input type="hidden" name="id" value="<?=$aluno_dados[0]?>">
+                      <button type="submit" class="btn btn-warning">Editar</button>
+                    </form>
+                  </div>
+                </div>
+
+              <?php } ?>
+
+              <div class="row mt-5">
+                <div class="col-6">
+                  <a class="btn btn-lg btn-warning btn-block" href="home.php">Voltar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>                                                                                                                                                       código editar_aluno.php:     <?php
+// abrir_chamado.php
+require_once "../../validador_acesso.php";
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $arquivo = file('../../arquivo.txt');
+    $aluno = null;
+    foreach ($arquivo as $linha) {
+        $dados = explode('#', $linha);
+        if ($dados[0] == $id) {
+            $aluno = $dados;
+            break;
+        }
+    }
+}
+?>
+
+<!-- O conteúdo do arquivo abrir_chamado.php permanece o mesmo, mas você pode querer otimizar o código CSS e HTML. -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Cadastro Alunos - Editar</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+      .card-abrir-chamado {
+        padding: 60px 0 0 0;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .btn-hover:hover {
+        background-color: #070F4B !important;
+      }
+    </style>
+  </head>
+
+  <body>
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" style='background-color:#070F2B;'>
+    <div class="container-fluid">
+    <a href="#" class="navbar-brand" style='display:flex; justify-content:center; align-items:center; gap:8px; font-size:25px; color:beige;'>
+        <img src="../../LogoCadastro.png" width="50" height="50" class="d-inline-block align-top" alt="Logo.png">
+        Cadastro Alunos
+    </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+  </nav>
+
+    <div class="container">    
+      <div class="row">
+
+        <div class="card-abrir-chamado">
+          <div class="card">
+            <div class="card-header">
+              Cadastro de Aluno
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  
+                  <form method="post" action="processar_edicao.php">
+                    <input type="hidden" name="id" value="<?php echo $aluno[0]; ?>">
+
+                    <div class="form-group">
+                      <label>Nome</label>
+                      <input name="nome" type="text" class="form-control" placeholder="Nome" value="<?php echo $aluno[1]; ?>">
+                    </div>
+
+                    <div class="form-group">
+                      <label>Matrícula</label>
+                      <input name="matricula" type="text" class="form-control" placeholder="Matrícula" value="<?php echo $aluno[2]; ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                      <label>Curso</label>
+                      <select name="curso" class="form-control" value="<?php echo $aluno[3]; ?>">
+                        <option>Administração</option>
+                        <option>Arq e Urbanismo</option>
+                        <option>Biomedicina</option>
+                        <option>Ciências Contábeis</option>
+                        <option>Direito</option>
+                        <option>Enfermagem</option>
+                        <option>Eng. Agronômica</option>
+                        <option>Eng. Civil</option>
+                        <option>Eng. de Software</option>
+                        <option>Eng. Elétrica</option>
+                        <option>Eng. Mecânica</option>
+                        <option>Farmácia</option>
+                        <option>Fisioterapia</option>
+                        <option>Medicina</option>
+                        <option>Med. Veterinária</option>
+                        <option>Nutrição</option>
+                        <option>Odontologia</option>
+                        <option>Psicologia</option>
+                        <option>Publicidade e Propaganda</option>
+                      </select>
+                    </div>
+
+                    <div class="row mt-5">
+                      <div class="col-6">
+                        <a class="btn btn-lg btn-info btn-block" href="consultar_aluno.php">Voltar</a>
+                      </div>
+
+                      <div class="col-6">
+                        <button class="btn btn-lg btn-block btn-hover" type="submit" style='background-color:#070F2B; color:beige;'>Salvar Alterações</button>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </body>
+</html>                                                                                                                                                      código processar_edicao.php:  <?php
+    if (isset($_POST['id'], $_POST['nome'], $_POST['matricula'], $_POST['curso'])) {
+        $id = $_POST['id'];
+        $nome = $_POST['nome'];
+        $matricula = $_POST['matricula'];
+        $curso = $_POST['curso'];
+
+        // Ler o arquivo e buscar a linha do aluno
+        $arquivo = file('../../arquivo.txt');
+        $linhasAtualizadas = [];
+        foreach ($arquivo as $linha) {
+            $dados = explode('#', $linha);
+            if ($dados[0] == $id) {
+                // Atualizar os dados do aluno
+                $linha = implode('#', [$id, $nome, $matricula, $curso]) . PHP_EOL;
+            }
+            $linhasAtualizadas[] = $linha;
+        }
+
+        // Reescrever o arquivo com os dados atualizados
+        file_put_contents('../../arquivo.txt', $linhasAtualizadas);
+
+        // Redirecionar ou mostrar uma mensagem de sucesso
+        header('Location: consultar_aluno.php');
+    }
+?>                                                                                                                                                               código excluir_aluno.php:    <?php
+    session_start();
+    require_once "../../validador_acesso.php";
+
+    $id = $_POST['id'];
+
+    // Lendo o arquivo e removendo a linha correspondente
+    $arquivo = file('../../arquivo.txt');
+    $linhas = array();
+    foreach ($arquivo as $linha) {
+        $dados = explode('#', $linha);
+        if ($dados[0] == $id) {
+            // Não adicione a linha ao array $linhas se corresponder ao ID a ser excluído
+            continue;
+        }
+        $linhas[] = $linha;
+    }
+
+    // Escrevendo o arquivo de volta sem a linha excluída
+    file_put_contents('../../arquivo.txt', $linhas);
+
+    // Redirecionando de volta para a página de consulta
+    header('Location: consultar_aluno.php');
+    exit;
+?>
